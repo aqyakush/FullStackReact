@@ -14,46 +14,65 @@ const Part = (props) => {
     return (
         <div>
             <p>
-                {props.part} {props.exercises}
+                {props.name} {props.exercises}
             </p>
         </div>
     )
 }
 
 const Content = (props) => {
+    const b = props.parts
+    const Items = []
+    b.forEach(value => {
+        Items.push(<Part name={value.name} exercises={value.exercises} />)
+    })
+
     return (
         <div>
-            <Part part={props.part1} exercises={props.exercises1} />
-            <Part part={props.part2} exercises={props.exercises2} />
-            <Part part={props.part3} exercises={props.exercises3} />
+            {Items} 
         </div>
     )
 }
 
 const Total = (props) => {
+    var t = 0
+    const numbers = props.number
+    numbers.forEach(value => {
+        t += value.exercises
+    })
     return (
         <div>
-            <p> Number of exercises {props.number}</p>
+            <p> Number of exercises {t}</p>
         </div>
     )
 }
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+    const course = {
+        name: 'Half Stack application development',
+        parts: [
+          {
+            name: 'Fundamentals of React',
+            exercises: 10
+          },
+          {
+            name: 'Using props to pass data',
+            exercises: 7
+          },
+          {
+            name: 'State of a component',
+            exercises: 14
+          }
+        ]
+      }
 
-  return (
-    <div>
-        <Header name={course} />
-        <Content part1 = {part1} part2 = {part2} part3 = {part3} exercises1={exercises1} exercises2={exercises2} exercises3={exercises3} />
-        <Total number={exercises1 + exercises2 + exercises3} />
-    </div>
-  )
+    return (
+        <div>
+            <Header name={course.name} />
+            <Content parts = {course.parts} />
+            <Total number={course.parts} />
+        </div>
+    )
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
